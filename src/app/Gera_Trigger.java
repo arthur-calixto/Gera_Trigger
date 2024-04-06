@@ -1,18 +1,20 @@
 package app;
 
+//import java.awt.Desktop;
+//import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import java.io.*;
-
 public class Gera_Trigger {
 
-    public static void gerarTrigger(String tableName, String[] campos, String primaryKey) throws IOException {
+    public static void gerarTrigger(String tableName, String[] campos, String primaryKey, String filePath) throws IOException {
     	
     	// Obtendo o diretório da área de trabalho do usuário
-        String desktopPath = System.getProperty("user.home") + "\\Desktop\\";
+        //String desktopPath = System.getProperty("user.home") + "\\Desktop\\";
+    	String desktopPath = filePath;
+        
         //String desktopPath = "C:\\TRIGGER\\";
-        String nome_arquivo = desktopPath + tableName + "_LOG.sql";
+        String nome_arquivo = desktopPath ;
         
         PrintWriter ps = new PrintWriter(nome_arquivo);
         
@@ -57,8 +59,17 @@ public class Gera_Trigger {
         ps.println ("END IF;"); 
         ps.println ("END;"); 
         
-        
-        
+        //abrir_arquivo (nome_arquivo);
         ps.close();
+        
+        
     }
+    /*
+    public static void abrir_arquivo (String file_path) throws IOException {
+    	File file = new File (file_path);
+        Desktop desktop = Desktop.getDesktop();
+         desktop.open(file);
+         }
+         */
+    
 }
