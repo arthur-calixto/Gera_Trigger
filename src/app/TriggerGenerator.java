@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -24,6 +25,8 @@ public class TriggerGenerator extends JFrame implements ActionListener {
     private JButton generateButton;
     private JButton selectDirectoryButton;
     private File selectedDirectory;
+    private JCheckBox oracleCheckBox;
+    private JCheckBox sqlServerCheckBox;
 
     public TriggerGenerator() {
         setTitle("Trigger Generator");
@@ -58,14 +61,28 @@ public class TriggerGenerator extends JFrame implements ActionListener {
         primaryKeyField = new JTextField(20);
         primaryKeyField.setBounds(160, 80, 200, 25);
         panel.add(primaryKeyField);
+        
+        JLabel label = new JLabel("Selecione o Banco de Dados:");
+        label.setBounds(10, 110, 250, 25);
+        panel.add(label);
+
+        oracleCheckBox = new JCheckBox("Oracle");
+        oracleCheckBox.setBounds(180, 110, 100, 25);
+        panel.add(oracleCheckBox);
+
+
+        sqlServerCheckBox = new JCheckBox("SQL Server");
+        sqlServerCheckBox.setBounds(280, 110, 100, 25);
+        panel.add(sqlServerCheckBox);
+
 
         selectDirectoryButton = new JButton("Selecionar Diretório");
-        selectDirectoryButton.setBounds(160, 110, 200, 25);
+        selectDirectoryButton.setBounds(100, 160, 200, 25);
         selectDirectoryButton.addActionListener(this);
         panel.add(selectDirectoryButton);
 
         generateButton = new JButton("Gerar Triggers");
-        generateButton.setBounds(100, 150, 200, 25);
+        generateButton.setBounds(100, 190, 200, 25);
         generateButton.addActionListener(this);
         panel.add(generateButton);
 
@@ -74,7 +91,7 @@ public class TriggerGenerator extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == selectDirectoryButton) {
-            // Cria uma instância de JFileChooser para selecionar o diretório de salvamento
+          
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.setDialogTitle("Selecionar Diretório de Salvamento");
             fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -91,18 +108,26 @@ public class TriggerGenerator extends JFrame implements ActionListener {
                 String[] campos = fields.split(",\\s*");
 
                 // Verifica se o usuário selecionou um diretório antes de gerar as triggers
-                if (selectedDirectory != null) {
-                    // Cria o caminho completo do arquivo no diretório selecionado
-                    String fileName = tableName + "_LOG.sql";
+                if (selectedDirectory != null && (sqlServerCheckBox.isSelected()  || oracleCheckBox.isSelected())) {
+                                      
+                    // Chamando o método da classe Gerar_Trigger para gerar as trigger - Oracle
+                    if (oracleCheckBox.isSelected()) {
+                    String fileName = tableName + "_ORC_LOG.sql";
                     String filePath = selectedDirectory.getAbsolutePath() + File.separator + fileName;
-                    
-                    // Chamando o método da classe Gerar_Trigger para gerar as triggers
                     Gera_Trigger.gerarTrigger(tableName, campos, primaryKey, filePath);
+                    }
+                    
+                    // Chamando o método da classe Gerar_Trigger_Sql para gerar as trigger - Sql Server
+                    if (sqlServerCheckBox.isSelected()) {
+                    String fileName = tableName + "_SQL_LOG.sql";
+                    String filePath = selectedDirectory.getAbsolutePath() + File.separator + fileName;	
+                   Gera_Trigger_Sql.gerarTrigger(tableName, campos, primaryKey, filePath);
+                    }
 
                     // Exibir mensagem de sucesso
                     JOptionPane.showMessageDialog(this, "Triggers geradas com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
                 } else {
-                    JOptionPane.showMessageDialog(this, "Por favor, selecione um diretório antes de gerar as triggers.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Por favor, selecione um diretório e o banco antes de gerar as triggers.", "Erro", JOptionPane.ERROR_MESSAGE);
                 }
             } catch (IOException ex) {
                 ex.printStackTrace();
