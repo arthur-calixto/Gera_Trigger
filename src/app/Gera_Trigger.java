@@ -1,5 +1,7 @@
 package app;
 
+//import java.awt.Desktop;
+//import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -7,23 +9,18 @@ public class Gera_Trigger {
 
     public static void gerarTrigger(String tableName, String[] campos, String primaryKey, String filePath) throws IOException {
     	
-
+    	// Obtendo o diretório da área de trabalho do usuário
+        //String desktopPath = System.getProperty("user.home") + "\\Desktop\\";
     	String desktopPath = filePath;
+        
+        //String desktopPath = "C:\\TRIGGER\\";
         String nome_arquivo = desktopPath ;
         
         PrintWriter ps = new PrintWriter(nome_arquivo);
         
-        ps.println("CREATE OR REPLACE TRIGGER TRG_I_U_D_" + tableName + "_ORC_LOG");
+        ps.println("CREATE OR REPLACE TRIGGER TRG_I_U_D_" + tableName + "_LOG");
         ps.println ("BEFORE  INSERT OR UPDATE OR DELETE  ON " + tableName + " FOR EACH ROW");
-        ps.println ("DECLARE P_ACAO VARCHAR2(10), P_CHAVEPK VARCHAR(400), @CODUSU_LOG VARCHAR(4000)");
-        ps.println("DECLARE ");
-        for (String campo : campos) {
-        	ps.println("@"+campo+"_NEW VARCHAR(4000), \r\n"
-        			+ "@"+campo+"_OLD VARCHAR(4000)");
-        	
-        }
-        
-        
+        ps.println ("DECLARE P_ACAO VARCHAR2(10); P_CHAVEPK VARCHAR(400);");
         ps.println("BEGIN");
         ps.println ("P_CHAVEPK := 'PK [' || '"+ primaryKey +"' || '=' || :NEW."+primaryKey+" || ']';");
 
@@ -67,5 +64,12 @@ public class Gera_Trigger {
         
         
     }
+    /*
+    public static void abrir_arquivo (String file_path) throws IOException {
+    	File file = new File (file_path);
+        Desktop desktop = Desktop.getDesktop();
+         desktop.open(file);
+         }
+         */
     
 }

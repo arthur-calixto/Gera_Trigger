@@ -46,7 +46,7 @@ public class TriggerGenerator extends JFrame implements ActionListener {
         tableNameField.setBounds(160, 20, 200, 25);
         panel.add(tableNameField);
 
-        JLabel fieldsLabel = new JLabel("Campos:");
+        JLabel fieldsLabel = new JLabel("Campos :");
         fieldsLabel.setBounds(10, 50, 150, 25);
         panel.add(fieldsLabel);
 
@@ -112,14 +112,14 @@ public class TriggerGenerator extends JFrame implements ActionListener {
                                       
                     // Chamando o método da classe Gerar_Trigger para gerar as trigger - Oracle
                     if (oracleCheckBox.isSelected()) {
-                    String fileName = tableName + "_ORC_LOG.sql";
+                    String fileName = "TRG_I_U_D_"+tableName + "_LOG_ORC.sql";
                     String filePath = selectedDirectory.getAbsolutePath() + File.separator + fileName;
                     Gera_Trigger.gerarTrigger(tableName, campos, primaryKey, filePath);
                     }
                     
                     // Chamando o método da classe Gerar_Trigger_Sql para gerar as trigger - Sql Server
                     if (sqlServerCheckBox.isSelected()) {
-                    String fileName = tableName + "_SQL_LOG.sql";
+                    String fileName = "TRG_I_U_D_"+tableName + "_LOG_SQL.sql";
                     String filePath = selectedDirectory.getAbsolutePath() + File.separator + fileName;	
                    Gera_Trigger_Sql.gerarTrigger(tableName, campos, primaryKey, filePath);
                     }
