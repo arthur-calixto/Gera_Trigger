@@ -194,7 +194,7 @@ public class Gera_Trigger_Sql {
         
         for (String campo : campos) {
             ps.println ("IF @"+campo+"_NEW IS NOT NULL");   
-            ps.println("EXEC  .STP_GRAVATABLOG '"+tableName+"', @P_CHAVEPK,'"+campo+"',@CODUSU_LOG,'INSERT',' ',@"+campo+"_OLD");
+            ps.println("EXEC  .STP_GRAVATABLOG '"+tableName+"', @P_CHAVEPK,'"+campo+"',@CODUSU_LOG,'DELETE',' ',@"+campo+"_OLD");
             ps.println();
         }
         
