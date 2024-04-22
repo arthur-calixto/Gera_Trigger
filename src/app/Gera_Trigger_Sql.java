@@ -288,56 +288,11 @@ public class Gera_Trigger_Sql {
         ps.println ("GO");
         
 
-        
-        
-        
-/*
-        // INSERT
-        ps.println ("IF INSERTING THEN"); 
-        for (String campo : campos) {
-            ps.println ("IF :NEW."+campo+" IS NOT NULL THEN");   
-            ps.println("  STP_GRAVATABLOG('"+tableName+"', P_CHAVEPK,'"+campo+"',:NEW.CODUSU,'INSERT',:NEW."+campo+",' ');");
-            ps.println("END IF;");
-        }
-        ps.println ("RETURN;"); 
-        // FIM DO LAÇO  INSERT
-        
-        // DELETE
-        
-        ps.println ("ELSIF DELETING THEN"); 
-        for (String campo : campos) {
-            ps.println ("IF :OLD."+campo+" IS NOT NULL THEN");   
-            ps.println("  STP_GRAVATABLOG('"+tableName+"', P_CHAVEPK,'"+campo+"',:OLD.CODUSU,'DELETE',:OLD."+campo+",' ');");
-            ps.println("END IF;");
-        }
-        ps.println ("RETURN;"); 
-        // FIM DO LAÇO DELETE
-        
-        
-        // UPDATE
-        
-        ps.println ("ELSIF UPDATING THEN");
-        for (String campo : campos) {
-            ps.println ("IF NVL(:OLD."+campo+", 0) <> NVL(:NEW."+campo+", 0) THEN"); 
-            ps.println ("STP_GRAVATABLOG('"+tableName+"', P_CHAVEPK,'"+campo+"', :NEW."+campo+", 'UPDATE',:NEW."+campo+",:OLD."+campo+");");
-            ps.println("END IF;");
-        }
-        ps.println ("RETURN;"); 
-        
-        ps.println ("END IF;"); 
-        ps.println ("END;"); 
-        */
-        //abrir_arquivo (nome_arquivo);
+   
         ps.close();
         
         
     }
-    /*
-    public static void abrir_arquivo (String file_path) throws IOException {
-    	File file = new File (file_path);
-        Desktop desktop = Desktop.getDesktop();
-         desktop.open(file);
-         }
-         */
+
     
 }
